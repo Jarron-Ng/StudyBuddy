@@ -81,8 +81,9 @@ public class Register extends AppCompatActivity {
                         user.put("Email", email);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }
-                    else
-                        Toast.makeText(Register.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    else {
+                        Toast.makeText(Register.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
                 });
             }

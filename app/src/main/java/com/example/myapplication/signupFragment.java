@@ -21,6 +21,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-//When working with fragments, instead of using this or referring to the context, always use getActivity()
+//When working with fragments, instead of using this or referring to the context, always use getActivity() in intent
 public class signupFragment extends Fragment {
 
     public static final String TAG = "TAG";
@@ -65,7 +68,6 @@ public class signupFragment extends Fragment {
                     mName.setError("Name is Required");
                     return;
                 }
-
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is Required");
                     return;
@@ -85,12 +87,43 @@ public class signupFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
 
-                                boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
+                                // check if task.isSuccessful for this method, in this case is fetching email add from firestore
+                                // if ! successful then display error msg
+                                if (task.isSuccessful()) {
+                                    // this compares user email address in sign up page to all email address in firebase
+                                    // if match, return true, else false
+                                    boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
 
-                                if (isNewUser) {
-                                    Log.e("TAG", "Is New User!");
-                                } else {
-                                    Toast.makeText(getActivity(), "This email address is already registered", Toast.LENGTH_SHORT).show();
+                                    if (isNewUser)
+                                        Log.e(TAG, "New user");
+
+                                    // if not new user then, display message that user is already registered
+                                    // Try-catch block required because it crashed the app if you key in a badly formatted email address
+                                    // throwing task.getException() requires you to implement all 4 exceptions
+                                    else {
+                                        try {
+                                            Toast.makeText(getActivity(), "This email address is already registered", Toast.LENGTH_SHORT).show();
+                                            throw task.getException();
+                                        } catch (FirebaseAuthWeakPasswordException weakPassword) {
+                                            Log.d(TAG, "onComplete: weak_password");
+                                        } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
+                                            Log.d(TAG,"onComplete: email_badly_formatted");
+                                        } catch (FirebaseAuthUserCollisionException existEmail) {
+                                            Log.d(TAG, "onComplete: exist_email");
+                                        } catch (Exception e) {
+                                            Log.d(TAG, "onComplete: " + e.getMessage());
+                                        }
+                                    }
+                                }
+                                // There is a potential that .getMessage() might return null
+                                // the task.getException() do not cover all scenarios when entering an invalid email address
+                                // some of the formats might lead to a null object. If the getMessage() is null, it crashes the app.
+                                // Use a ternary operator -?- to check if its null to handle it
+                                // If not null, execute task.getException().getMessage(), else display my own message
+                                else {
+                                    Toast.makeText(getActivity(), (task.getException() != null ?
+                                            task.getException().getMessage() + " Please enter a valid email format" : ""),
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -119,6 +152,7 @@ public class signupFragment extends Fragment {
                             });
                             startActivity(new Intent(getActivity(), educationLevel.class));
                         }
+
                     }
                 });
             }
