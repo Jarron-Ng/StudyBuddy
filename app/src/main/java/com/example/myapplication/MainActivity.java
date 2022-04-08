@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Timestamp;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     // reference that points to a subtree, root in database, dictionary
     DatabaseReference mRootDatabaseRef;
     DatabaseReference mNodeRef;
+    FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         textViewMsg = findViewById(R.id.button2);
         mRootDatabaseRef = FirebaseDatabase.getInstance().getReference();
         mNodeRef = mRootDatabaseRef.child(node);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
 
         // get message whenever there is database change in the node (realtime update)
         mNodeRef.addValueEventListener(new ValueEventListener() {

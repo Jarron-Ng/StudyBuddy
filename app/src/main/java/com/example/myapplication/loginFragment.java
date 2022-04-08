@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 // Create a Fragment class that returns the layout that you just created in the onCreateView() method.
 // You can then create instances of this fragment in the parent activity whenever you need a new page to display to the user:
 // This class is to create pages for the views, not fragment

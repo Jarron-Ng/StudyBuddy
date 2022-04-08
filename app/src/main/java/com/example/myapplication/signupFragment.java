@@ -139,6 +139,7 @@ public class signupFragment extends Fragment {
                             Map<String, Object> user = new HashMap<>();
                             user.put("Name", name);
                             user.put("Email", email);
+                            user.put("task list", new Tasks());
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
