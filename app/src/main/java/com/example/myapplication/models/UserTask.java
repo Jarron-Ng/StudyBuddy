@@ -1,9 +1,9 @@
-package com.example.myapplication;
+package com.example.myapplication.models;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 // NOTE: for backend database to use and capture
-public class Task {
+public class UserTask {
     private String title;
     private String description;
     private String color;
@@ -14,7 +14,7 @@ public class Task {
     private String tag;
 
     //constructor
-    public Task(String title, String description, String color, LocalDateTime startDateTime, LocalDateTime endDateTime, String subject, String tag, String status) {
+    public UserTask(String title, String description, String color, LocalDateTime startDateTime, LocalDateTime endDateTime, String subject, String tag, String status) {
         this.title = title;
         this.description = description;
         this.color = color;

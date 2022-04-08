@@ -63,7 +63,7 @@ public class loginFragment extends Fragment{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getActivity(), "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            startActivity(new Intent(getActivity(), explore.class)); // NOTE: big J i changed this frm main activity to explore which is my landing page class
                         }
                         else
                             Toast.makeText(getActivity(), "Invalid Credentials! "
