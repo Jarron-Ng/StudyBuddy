@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".explore"
-            android:exported="false" />
-        <activity
             android:name=".startup"
             android:exported="true">
             <intent-filter>
@@ -25,33 +22,19 @@
         </activity>
         <activity
             android:name=".Login"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true">  <!-- does not save history android stack, does not return to the page on back press-->
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register"
-            android:exported="true">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".explore"
+            android:exported="false"/>
         <activity
-            android:name=".educationLevel"
-            android:exported="true">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:name=".AddTask"
+            android:exported="false"
+            android:noHistory="true"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

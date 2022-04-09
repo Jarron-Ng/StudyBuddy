@@ -19,7 +19,6 @@ public class startup extends AppCompatActivity {
         setContentView(R.layout.activity_startup);
 
         mLoginBtn = findViewById(R.id.loginStartup);
-        mSignUpBtn = findViewById(R.id.signup);
 
         // create an instance for button press, direct to login page
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
@@ -29,13 +28,6 @@ public class startup extends AppCompatActivity {
             }
         });
 
-        // create an instance for button press, direct to sign up page
-        mSignUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Register.class));
-            }
-        });
     }
 
 

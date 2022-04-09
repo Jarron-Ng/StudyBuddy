@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,6 +36,11 @@ import java.util.Map;
 
 //When working with fragments, instead of using this or referring to the context, always use getActivity() in intent
 public class signupFragment extends Fragment {
+
+    // keys for shared preferences
+    public static final String UID = "UID";
+    public static final String NAME = "Name";
+    public static final String EMAIL = "Email";
 
     public static final String TAG = "TAG";
     EditText mName, mEmail, mPassword;
@@ -52,10 +60,10 @@ public class signupFragment extends Fragment {
         mStore = FirebaseFirestore.getInstance();
 
         // check if user is already logged in
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getActivity(), MainActivity.class));
+        /*if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getActivity(), Login.class));
             getActivity().finish();
-        }
+        }*/
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +159,34 @@ public class signupFragment extends Fragment {
                                     Log.d(TAG, "onFailure: " + e.toString());
                                 };
                             });
-                            startActivity(new Intent(getActivity(), educationLevel.class));
+
+                            // saves shared preferences in Shared_preferences_for_Jon.xml, private to editor
+                            SharedPreferences preferences = getActivity().getSharedPreferences("Shared_preferences_for_Jon", Context.MODE_PRIVATE);
+                            FirebaseUser getUser = mAuth.getCurrentUser();
+                            if (getUser != null){
+                                String name = getUser.getDisplayName();
+                                String email = getUser.getEmail();
+                                String uid = getUser.getUid();
+
+                                // put details into the editor, saved as key-value pairs
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString(UID, uid);
+                                editor.putString(NAME, name);
+                                editor.putString(EMAIL, email);
+
+                                // test to see if data is saved
+                                // Find the folder on View > Tool Windows > Device File Explorer
+                                // data > data > shared_pref > com.example.myapplication
+                                // or just use the search button on the top right for device file explorer
+                                editor.apply();
+
+                                // test to see if data is saved
+                                /*if (editor.commit())
+                                    Toast.makeText(getActivity(), "Data is saved", Toast.LENGTH_LONG).show();*/
+                            }
+
+
+                            startActivity(new Intent(getActivity(), explore.class));
                         }
 
                     }
