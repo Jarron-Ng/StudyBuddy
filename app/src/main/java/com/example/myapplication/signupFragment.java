@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 //When working with fragments, instead of using this or referring to the context, always use getActivity() in intent
 public class signupFragment extends Fragment {
@@ -111,7 +112,7 @@ public class signupFragment extends Fragment {
                                     else {
                                         try {
                                             Toast.makeText(getActivity(), "This email address is already registered", Toast.LENGTH_SHORT).show();
-                                            throw task.getException();
+                                            throw Objects.requireNonNull(task.getException());
                                         } catch (FirebaseAuthWeakPasswordException weakPassword) {
                                             Log.d(TAG, "onComplete: weak_password");
                                         } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
@@ -157,14 +158,14 @@ public class signupFragment extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Log.d(TAG, "onFailure: " + e.toString());
-                                };
+                                }
                             });
 
                             // saves shared preferences in Shared_preferences_for_Jon.xml, private to editor
                             SharedPreferences preferences = getActivity().getSharedPreferences("Shared_preferences_for_Jon", Context.MODE_PRIVATE);
                             FirebaseUser getUser = mAuth.getCurrentUser();
                             if (getUser != null){
-                                String name = getUser.getDisplayName();
+                                //String name = getUser.getDisplayName();
                                 String email = getUser.getEmail();
                                 String uid = getUser.getUid();
 
