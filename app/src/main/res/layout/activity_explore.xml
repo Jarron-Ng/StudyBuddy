@@ -49,6 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginTop="132dp"
+                    android:paddingLeft="20dp"
                     android:text="Good Afternoon"
                     android:textColor="#000000"
                     android:textSize="34sp"
@@ -61,7 +62,8 @@
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="264dp"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
+                    android:paddingLeft="20dp"
                     android:text="Tom"
                     android:textColor="#000000"
                     android:textSize="34sp"

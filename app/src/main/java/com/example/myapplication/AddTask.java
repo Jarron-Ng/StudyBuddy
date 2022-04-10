@@ -1,20 +1,37 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.myapplication.models.TaskListAdapter;
+import com.example.myapplication.models.Tasks;
 import com.example.myapplication.models.User;
 import com.example.myapplication.models.UserTask;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AddTask extends AppCompatActivity {
+    public static final String UID = "UID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +66,40 @@ public class AddTask extends AppCompatActivity {
 
                 LocalDateTime rightnow = LocalDateTime.now();
 
-                UserTask taskTemp = new UserTask(taskTitle,"","", LocalDateTime.parse(taskTime), LocalDateTime.parse(taskTime), taskSubject, taskPriority, "Not Done");
+                UserTask taskTemp = new UserTask(taskTitle,"","", taskTime, taskTime, taskSubject, taskPriority, "Not Done");
 
 
                 // TODO: from shared preferences get the login session id of current user
+                SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
+                String uid = preferences.getString(UID, "");
 
-                // TODO: from current user id, query firestore database for the tasks object
+                // TODO: retrieve tasksObj from sharedPref and add a task to it and store back into sharedpref
+                Gson gson = new Gson();
+                String json = preferences.getString("Tasks", "");
+                Tasks tasksObj = gson.fromJson(json, Tasks.class);
+                tasksObj.addTask(taskTemp);
 
-                // TODO: take the tasks object, add task to it then reupload back to firestore
+                SharedPreferences.Editor editor2 = preferences.edit();
+                Gson gson1 = new Gson();
+                String json1 = gson1.toJson(tasksObj);
+                editor2.putString("Tasks", json);
+                editor2.commit();
+
+
+
+                // TODO: from current user id, update firestore database arrayUnion new task into task list. build a HashMap taskUpload obj first
+                HashMap<String, String> taskUpload = new HashMap<String, String>();
+                taskUpload.put("title", taskTitle);
+                taskUpload.put("description", "");
+                taskUpload.put("color","");
+                taskUpload.put("startDateTime",taskTime);
+                taskUpload.put("endDateTime",taskTime);
+                taskUpload.put("subject", taskSubject);
+                taskUpload.put("tag", taskPriority);
+                taskUpload.put("status","Not Done");
+                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(uid);
+                documentReference.update("task list", FieldValue.arrayUnion(taskUpload));
+
 
 
                 // go back to explore page

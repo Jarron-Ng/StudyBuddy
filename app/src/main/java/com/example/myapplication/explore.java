@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -9,8 +10,15 @@ import com.example.myapplication.models.RecyclerItemClickListener;
 import com.example.myapplication.models.TaskListAdapter;
 import com.example.myapplication.models.Tasks;
 import com.example.myapplication.models.UserTask;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,10 +37,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class explore extends AppCompatActivity {
 
     private Tasks tasks = new Tasks();
+    public static final String UID = "UID";
+    public static final String NAME = "Name";
+    public static final String EMAIL = "Email";
+    private String TAG = "Firebase";
 
     // Add RecyclerView member
     private RecyclerView recyclerView;
@@ -44,56 +60,99 @@ public class explore extends AppCompatActivity {
         setContentView(R.layout.activity_explore);
         //Button mQuiz = findViewById(R.id.quiz);
 
-        // initialise some data for testing
-        //TODO: for actual implementaion, app should read firebase data that returns a object of class Task, as implemented in the Models folder
-        String tag1 = "urgent";
-        String tag2 = "due";
-        String tag3 = "overdue";
-        String tag4 = "Low";
-        String tag5 = "Mid";
-        String tag6 = "High";
-        String status1 = "Not Done";
-        String status2 = "Completed";
-        LocalDateTime rightnow = LocalDateTime.now();
-        UserTask userTask1 = new UserTask("Revise math", "I hate math", "orange", rightnow, rightnow, "Science", tag1, "Not Done");
-        UserTask userTask2 = new UserTask("test2", "i love math", "blue", rightnow, rightnow, "Math", tag2, "Not Done");
-        UserTask userTask3 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask4 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask5 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask6 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask7 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask8 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask9 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask10 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask11 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask12 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-//        UserTask userTask13 = new UserTask("jefifjeioajfoej", "feijfoiajfngi", "blue", rightnow, rightnow, "physics", tag3, "Not Done");
-        tasks.addTask(userTask1);
-        tasks.addTask(userTask2);
-        tasks.addTask(userTask3);
-//        tasks.addTask(task4);
-//        tasks.addTask(task5);
-//        tasks.addTask(task6);
-//        tasks.addTask(task7);
-//        tasks.addTask(task8);
-//        tasks.addTask(task9);
-//        tasks.addTask(task10);
-//        tasks.addTask(task11);
-//        tasks.addTask(task12);
-//        tasks.addTask(task13);
+        //firebase query
+        // saves shared preferences in Shared_preferences_for_Jon.xml, private to editor
+        SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        String uid = preferences.getString(UID, "");
+        String name = preferences.getString(NAME, "");
+
+        //set user Display name
+        TextView displayName = findViewById(R.id.textView6);
+        displayName.setText(name);
 
 
-        // TODO: from shared preferences, get the user login session id
+        DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(uid);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    Tasks tasksSave = new Tasks();
+                    if (document.exists()) {
+                        String name = (String) document.getData().get("Name");
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("Tasks", name);
+                        editor.commit();
+                        ArrayList<String> tasks = (ArrayList<String>) document.getData().get("task list");
 
-        // TODO: from current user id, query firestore database for the tasks object
 
-        // TODO: take the tasks object and pass it to TaskList adapter for recyclerview to display data
+                        if (tasks != null) {
+                            for (Object i : tasks) {
+                                if (i != null) {
+                                    HashMap<String, String> taskTemp = (HashMap<String, String>) i;
+                                    String title = (String) taskTemp.get("title");
+                                    String description = (String) taskTemp.get("description");
+                                    String color = (String) taskTemp.get("color");
+                                    String startDateTime = (String) taskTemp.get("startDateTime");
+                                    String endDateTime = (String) taskTemp.get("endDateTime");
+                                    String subject = (String) taskTemp.get("subject");
+                                    String tag = (String) taskTemp.get("tag");
+                                    String status = (String) taskTemp.get("status");
+//                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-        // Add the following lines to create RecyclerView
-        recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(explore.this));
-        recyclerView.setAdapter(new TaskListAdapter(1234, tasks));
+                                    UserTask taskObj = new UserTask(title, description, color, startDateTime, endDateTime, subject, tag, status);
+
+                                    tasksSave.addTask(taskObj);
+
+                                }
+                            }
+                            // TODO: save the tasksSave tasks object to shared preferences folder
+                            SharedPreferences.Editor editor2 = preferences.edit();
+                            Gson gson = new Gson();
+                            String json = gson.toJson(tasksSave);
+                            editor2.putString("Tasks", json);
+                            editor2.commit();
+
+
+                            Log.i("firebase ", "json: " + json);
+                            Log.i("firebase", "Tasks" + tasks);
+                            Log.d("firebase", "DocumentSnapshot data: " + document.getData());
+
+                            // NOTE: shifted recycler view instantiation into the oncompletelister of firebase query. directly use firebase query to generate data
+                            // Add the following lines to create RecyclerView
+                            recyclerView = findViewById(R.id.recyclerview);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(explore.this));
+                            recyclerView.setAdapter(new TaskListAdapter(1234, tasksSave));
+                            Log.i("sharedPref","json " + json);
+
+
+                        }
+
+                    } else {
+                        Log.d("firebase", "No such document");
+                    }
+                } else {
+                    Log.d("firebase", "get failed with ", task.getException());
+                }
+            }
+        });// NOTE: add extra curly bracket here to go to other method
+
+
+
+        //to retrieve
+//        SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = preferences.getString("Tasks", "");
+        Tasks tasksObj = gson.fromJson(json, Tasks.class);
+
+        //test getting uid and email frm sharedpref
+//        String uid = preferences.getString(UID, "");
+        String email = preferences.getString(EMAIL, "");
+        Log.i("sharedPref", "UID: " + uid);
+        Log.i("sharedPref", "email: " + email);
+
 
         //on click listener for add button
         findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
@@ -106,18 +165,18 @@ public class explore extends AppCompatActivity {
 
 
         // onClickListener for click events on items in recylcer view
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(explore.this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever TODO: implement click on task handler what it should do next
-                        Log.i("testTouch", "fragment touched");
-                    }
-
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
+//        recyclerView.addOnItemTouchListener(
+//                new RecyclerItemClickListener(explore.this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override public void onItemClick(View view, int position) {
+//                        // do whatever TODO: implement click on task handler what it should do next
+//                        Log.i("testTouch", "fragment touched");
+//                    }
+//
+//                    @Override public void onLongItemClick(View view, int position) {
+//                        // do whatever
+//                    }
+//                })
+//        );
 
 
         // pomodoro button to bring user to pomodoro activity
@@ -156,6 +215,48 @@ public class explore extends AppCompatActivity {
                         finish();
                     }
                 }).create().show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onStart() {
+
+        super.onStart();
+
+        //FIXME: maybe a work around is that onStart of the explore page, i query firebase again just to be sure. and save it to sharedpref since query frm loginfragment and save to sharedpref doesnt work
+
+        //to retrieve Tasks obj from sharedpref folder
+        SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = preferences.getString("Tasks", "");
+        Tasks tasksObj = gson.fromJson(json, Tasks.class);
+
+        // TODO: take the tasks object and pass it to TaskList adapter for recyclerview to display data
+
+        // Add the following lines to create RecyclerView
+        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(explore.this));
+        recyclerView.setAdapter(new TaskListAdapter(1234, tasksObj));
+
+        // greeting morning / afternoon / night
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+
+        String greeting = null;
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            greeting = "Morning";
+        }else if(timeOfDay >= 12 && timeOfDay < 16){
+            greeting = "Afternoon";
+        }else if(timeOfDay >= 16 && timeOfDay < 21){
+            greeting = "Evening";
+        }else if(timeOfDay >= 21 && timeOfDay < 24){
+            greeting = "Night";
+        }
+        TextView greetingView = findViewById(R.id.textView);
+        greetingView.setText("Good " + greeting + ",");
+
     }
 
 }

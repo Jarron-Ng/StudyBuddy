@@ -31,6 +31,7 @@ import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -148,7 +149,7 @@ public class signupFragment extends Fragment {
                             Map<String, Object> user = new HashMap<>();
                             user.put("Name", name);
                             user.put("Email", email);
-                            user.put("task list", new Tasks());
+                            user.put("task list", new ArrayList());
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {

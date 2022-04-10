@@ -68,7 +68,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm a");
             userTask = tasks.getTask(position);
-            holder.getView().setText(userTask.getStartDateTime().format(formatter));
+            holder.getView().setText(userTask.getStartDateTime());
             holder.getView_title().setText(userTask.getTitle());
             holder.getView_tag1().setText(userTask.getTag());
             holder.getView_tag2().setText(userTask.getSubject());

@@ -22,6 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -79,20 +82,28 @@ public class loginFragment extends Fragment{
                             SharedPreferences preferences = getActivity().getSharedPreferences("Shared_preferences_for_Jon", Context.MODE_PRIVATE);
                             FirebaseUser getUser = mAuth.getCurrentUser();
                             if (getUser != null){
-                                String name = getUser.getDisplayName();
                                 String email = getUser.getEmail();
                                 String uid = getUser.getUid();
 
-                                // put details into the editor, saved as key-value pairs
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putString(UID, uid);
-                                editor.putString(NAME, getUser.getDisplayName());
-                                editor.putString(EMAIL, email);
+                                //query firestore for username
+                                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(uid);
+                                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                      @Override
+                                      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                          DocumentSnapshot document = task.getResult();
+                                          String name = (String) document.getData().get("Name");
+                                          // put details into the editor, saved as key-value pairs
+                                          SharedPreferences.Editor editor = preferences.edit();
+                                          editor.putString(UID, uid);
+                                          editor.putString(NAME, name);
+                                          editor.putString(EMAIL, email);
 
-                                // Find the folder on View > Tool Windows > Device File Explorer
-                                // data > data > shared_pref > com.example.myapplication
-                                // or just use the search button on the top right for device file explorer
-                                editor.apply();
+                                          // Find the folder on View > Tool Windows > Device File Explorer
+                                          // data > data > shared_pref > com.example.myapplication
+                                          // or just use the search button on the top right for device file explorer
+                                          editor.apply();
+                                      }
+                                  });
 
                                 // test to see if data is saved
                                 /*if (editor.commit())
