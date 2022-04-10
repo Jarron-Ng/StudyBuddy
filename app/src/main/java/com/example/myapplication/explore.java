@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -35,11 +36,13 @@ public class explore extends AppCompatActivity {
     // Add RecyclerView member
     private RecyclerView recyclerView;
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
+        //Button mQuiz = findViewById(R.id.quiz);
 
         // initialise some data for testing
         //TODO: for actual implementaion, app should read firebase data that returns a object of class Task, as implemented in the Models folder
@@ -121,9 +124,20 @@ public class explore extends AppCompatActivity {
         findViewById(R.id.pomodoro_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add in pomodoro activity intent here transition
+                Intent intent = new Intent(explore.this, Timer.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(intent, 0);
             }
         });
+
+        // quiz button
+        /*mQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(explore.this, QuizMenu.class);
+                //startActivity(intent);
+            }
+        });*/
 
 
     }

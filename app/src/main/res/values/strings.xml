@@ -6,11 +6,4 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="name">Name</string>
-    <string name="what_is_your_current_education_level">What is your current education level?</string>
-    <string name="hello_there">Hello There!</string>
-    <string name="primary">Primary</string>
-    <string name="secondary">Secondary</string>
-    <string name="jcpoly">JC/Poly</string>
-    <string name="university">University</string>
-    <string name="skip">Skip</string>
 </resources>

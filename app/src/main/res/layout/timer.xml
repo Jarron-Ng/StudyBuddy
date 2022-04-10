@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constrainedHeight="false"
+    tools:context=".Timer">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timer_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="-67dp"
+        android:layout_weight="30"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hrview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:maxLength="2"
+            android:text="00"
+            android:textSize="48sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="2"
+            android:text=":"
+            android:textSize="48sp" />
+
+        <TextView
+            android:id="@+id/minview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:maxLength="2"
+            android:text="00"
+            android:textSize="48sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="2"
+            android:text=":"
+            android:textSize="48sp" />
+
+        <TextView
+            android:id="@+id/secview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:maxLength="2"
+            android:text="00"
+            android:textSize="48sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+
+        android:layout_alignBottom="@+id/timer_view"
+        android:layout_marginEnd="-109dp"
+        android:layout_marginBottom="-190dp"
+        android:layout_toStartOf="@+id/timer_view"
+        android:layout_weight="30"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/min_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:maxLength="2"
+            android:selectAllOnFocus="true"
+            android:text="00"
+            android:textSize="48sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Min"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+
+        android:layout_alignBottom="@+id/timer_view"
+        android:layout_marginEnd="-20dp"
+        android:layout_marginBottom="-190dp"
+        android:layout_toStartOf="@+id/timer_view"
+        android:layout_weight="30"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/hrs_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:maxLength="2"
+            android:selectAllOnFocus="true"
+            android:text="00"
+            android:textSize="48sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Hr"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+
+        android:layout_alignBottom="@+id/timer_view"
+        android:layout_marginEnd="-196dp"
+        android:layout_marginBottom="-190dp"
+        android:layout_toStartOf="@+id/timer_view"
+        android:layout_weight="30"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/sec_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:maxLength="2"
+            android:selectAllOnFocus="true"
+            android:text="00"
+            android:textSize="48sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Sec"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/timer_view"
+        android:layout_width="129dp"
+        android:layout_height="237dp"
+        android:layout_centerHorizontal="true"
+        android:drawableTop="@drawable/ic_action_name"
+        android:gravity="center"
+
+        android:src="@drawable/ic_action_name"
+        android:text="Timer"
+        android:textColor="#673AB7"
+        android:textSize="24sp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/startbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/timer_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="-116dp"
+        android:layout_marginBottom="-248dp"
+        android:layout_toRightOf="@+id/timer_view"
+        android:fontFamily="@font/roboto"
+        android:text="Start"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/endbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/timer_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="-109dp"
+        android:layout_marginBottom="-301dp"
+        android:layout_toRightOf="@+id/timer_view"
+        android:fontFamily="@font/roboto"
+        android:text="End"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+
+</RelativeLayout>

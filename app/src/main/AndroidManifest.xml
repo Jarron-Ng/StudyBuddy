@@ -35,6 +35,10 @@
             android:name=".AddTask"
             android:exported="false"
             android:noHistory="true"/>
+        <activity
+            android:name=".Timer"
+            android:exported="false"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

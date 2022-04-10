@@ -157,7 +157,7 @@ public class signupFragment extends Fragment {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: " + e.toString());
+                                    Log.d(TAG, "onFailure: " + e);
                                 }
                             });
 
@@ -175,7 +175,6 @@ public class signupFragment extends Fragment {
                                 editor.putString(NAME, name);
                                 editor.putString(EMAIL, email);
 
-                                // test to see if data is saved
                                 // Find the folder on View > Tool Windows > Device File Explorer
                                 // data > data > shared_pref > com.example.myapplication
                                 // or just use the search button on the top right for device file explorer

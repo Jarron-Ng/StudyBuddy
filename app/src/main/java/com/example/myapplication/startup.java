@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class startup extends AppCompatActivity {
 
-    Button mLoginBtn, mSignUpBtn;
+    Button mLoginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
