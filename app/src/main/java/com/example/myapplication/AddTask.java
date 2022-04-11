@@ -82,12 +82,12 @@ public class AddTask extends AppCompatActivity {
                 SharedPreferences.Editor editor2 = preferences.edit();
                 Gson gson1 = new Gson();
                 String json1 = gson1.toJson(tasksObj);
-                editor2.putString("Tasks", json);
+                editor2.putString("Tasks", json1);
                 editor2.commit();
 
 
 
-                // TODO: from current user id, update firestore database arrayUnion new task into task list. build a HashMap taskUpload obj first
+                // TODO: from current user id, update firestore database by using arrayUnion to add new task into task list. build a HashMap taskUpload obj first
                 HashMap<String, String> taskUpload = new HashMap<String, String>();
                 taskUpload.put("title", taskTitle);
                 taskUpload.put("description", "");

@@ -70,8 +70,6 @@ public class loginFragment extends Fragment{
                 }
 
                 // get user data from firebase and store into shared preferences
-
-
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -88,22 +86,28 @@ public class loginFragment extends Fragment{
                                 //query firestore for username
                                 DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(uid);
                                 documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                      @Override
-                                      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                          DocumentSnapshot document = task.getResult();
-                                          String name = (String) document.getData().get("Name");
-                                          // put details into the editor, saved as key-value pairs
-                                          SharedPreferences.Editor editor = preferences.edit();
-                                          editor.putString(UID, uid);
-                                          editor.putString(NAME, name);
-                                          editor.putString(EMAIL, email);
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            String name = (String) document.getData().get("Name");
+                                            // put details into the editor, saved as key-value pairs
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putString(UID, uid);
+                                            editor.putString(NAME, name);
+                                            editor.putString(EMAIL, email);
 
-                                          // Find the folder on View > Tool Windows > Device File Explorer
-                                          // data > data > shared_pref > com.example.myapplication
-                                          // or just use the search button on the top right for device file explorer
-                                          editor.apply();
-                                      }
-                                  });
+                                            // Find the folder on View > Tool Windows > Device File Explorer
+                                            // data > data > shared_pref > com.example.myapplication
+                                            // or just use the search button on the top right for device file explorer
+                                            editor.apply();
+                                            Log.i("firebase", "successful save user details to sharedpref");
+                                        }
+                                        else {
+                                            Log.i("firebase", "query firestore for uid failed to complete");
+                                        }
+                                    }
+                                });
 
                                 // test to see if data is saved
                                 /*if (editor.commit())
@@ -115,7 +119,6 @@ public class loginFragment extends Fragment{
                         else
                             Toast.makeText(getActivity(), "Invalid Credentials! "
                                     + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
                     }
                 });
             }
