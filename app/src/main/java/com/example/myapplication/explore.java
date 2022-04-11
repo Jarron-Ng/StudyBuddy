@@ -205,44 +205,44 @@ public class explore extends AppCompatActivity {
 
 //        //FIXME: maybe a work around is that onStart of the explore page, i query firebase again just to be sure. and save it to sharedpref since query frm loginfragment and save to sharedpref doesnt work
 //
-//        //to retrieve Tasks obj from sharedpref folder
-//        SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
-//        Gson gson = new Gson();
-//        String json = preferences.getString("Tasks", "");
-//        Tasks tasksObj = gson.fromJson(json, Tasks.class);
-//
-//        // TODO: take the tasks object and pass it to TaskList adapter for recyclerview to display data
-//
-//        // Add the following lines to create RecyclerView
-//        recyclerView = findViewById(R.id.recyclerview);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(explore.this));
-//
-//        if ( tasksObj != null ) {
-//            recyclerView.setAdapter(new TaskListAdapter(1234, tasksObj));
-//        }
-//        else {
-//            recyclerView.setAdapter(new TaskListAdapter(1234, new Tasks()));
-//        }
-//
-//
-//        // greeting morning / afternoon / night
-//        Calendar c = Calendar.getInstance();
-//        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-//
-//
-//        String greeting = null;
-//        if(timeOfDay >= 0 && timeOfDay < 12){
-//            greeting = "Morning";
-//        }else if(timeOfDay >= 12 && timeOfDay < 16){
-//            greeting = "Afternoon";
-//        }else if(timeOfDay >= 16 && timeOfDay < 21){
-//            greeting = "Evening";
-//        }else if(timeOfDay >= 21 && timeOfDay < 24){
-//            greeting = "Night";
-//        }
-//        TextView greetingView = findViewById(R.id.textView);
-//        greetingView.setText("Good " + greeting + ",");
+        //to retrieve Tasks obj from sharedpref folder
+        SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = preferences.getString("Tasks", "");
+        Tasks tasksObj = gson.fromJson(json, Tasks.class);
+
+        // TODO: take the tasks object and pass it to TaskList adapter for recyclerview to display data
+
+        // Add the following lines to create RecyclerView
+        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(explore.this));
+
+        if ( tasksObj != null ) {
+            recyclerView.setAdapter(new TaskListAdapter(1234, tasksObj));
+        }
+        else {
+            recyclerView.setAdapter(new TaskListAdapter(1234, new Tasks()));
+        }
+
+
+        // greeting morning / afternoon / night
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+
+        String greeting = null;
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            greeting = "Morning";
+        }else if(timeOfDay >= 12 && timeOfDay < 16){
+            greeting = "Afternoon";
+        }else if(timeOfDay >= 16 && timeOfDay < 21){
+            greeting = "Evening";
+        }else if(timeOfDay >= 21 && timeOfDay < 24){
+            greeting = "Night";
+        }
+        TextView greetingView = findViewById(R.id.textView);
+        greetingView.setText("Good " + greeting + ",");
 
     }
 
