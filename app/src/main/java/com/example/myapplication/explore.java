@@ -60,8 +60,8 @@ public class explore extends AppCompatActivity {
         setContentView(R.layout.activity_explore);
         //Button mQuiz = findViewById(R.id.quiz);
 
-        //firebase query
-        // saves shared preferences in Shared_preferences_for_Jon.xml, private to editor
+
+        // take UID from shared pref and name of user
         SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         String uid = preferences.getString(UID, "");
@@ -71,7 +71,7 @@ public class explore extends AppCompatActivity {
         TextView displayName = findViewById(R.id.textView6);
         displayName.setText(name);
 
-
+        //firebase query
         DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(uid);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -80,14 +80,12 @@ public class explore extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     Tasks tasksSave = new Tasks();
                     if (document.exists()) {
-                        String name = (String) document.getData().get("Name");
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("Tasks", name);
-                        editor.commit();
+                        // take array list from firebase
                         ArrayList<String> tasks = (ArrayList<String>) document.getData().get("task list");
 
 
                         if (tasks != null) {
+                            // take tasks from firebase and convert from firebase hashmap, to apps tasks data strcutre to pass to recycler view later
                             for (Object i : tasks) {
                                 if (i != null) {
                                     HashMap<String, String> taskTemp = (HashMap<String, String>) i;
@@ -125,9 +123,6 @@ public class explore extends AppCompatActivity {
                             recyclerView.setHasFixedSize(true);
                             recyclerView.setLayoutManager(new LinearLayoutManager(explore.this));
                             recyclerView.setAdapter(new TaskListAdapter(1234, tasksSave));
-                            Log.i("sharedPref","json " + json);
-
-
                         }
 
                     } else {
@@ -137,21 +132,7 @@ public class explore extends AppCompatActivity {
                     Log.d("firebase", "get failed with ", task.getException());
                 }
             }
-        });// NOTE: add extra curly bracket here to go to other method
-
-
-
-        //to retrieve
-//        SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = preferences.getString("Tasks", "");
-        Tasks tasksObj = gson.fromJson(json, Tasks.class);
-
-        //test getting uid and email frm sharedpref
-//        String uid = preferences.getString(UID, "");
-        String email = preferences.getString(EMAIL, "");
-        Log.i("sharedPref", "UID: " + uid);
-        Log.i("sharedPref", "email: " + email);
+        });
 
 
         //on click listener for add button
@@ -162,7 +143,6 @@ public class explore extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         // onClickListener for click events on items in recylcer view
 //        recyclerView.addOnItemTouchListener(
@@ -237,7 +217,14 @@ public class explore extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(explore.this));
-        recyclerView.setAdapter(new TaskListAdapter(1234, tasksObj));
+
+        if ( tasksObj != null ) {
+            recyclerView.setAdapter(new TaskListAdapter(1234, tasksObj));
+        }
+        else {
+            recyclerView.setAdapter(new TaskListAdapter(1234, new Tasks()));
+        }
+
 
         // greeting morning / afternoon / night
         Calendar c = Calendar.getInstance();
