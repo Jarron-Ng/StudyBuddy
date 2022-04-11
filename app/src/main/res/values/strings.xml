@@ -6,4 +6,34 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="name">Name</string>
+    <string name="welcome_to_studybuddy">Welcome to \nStudyBuddy</string>
+
+    <!-- Quiz strings -->
+    <string name="true_text">true</string>
+    <string name="false_text">false</string>
+    <string name="correct_answer">That\'s correct</string>
+    <string name="wrong_answer">That\'s incorrect</string>
+    <string name="q1">Five identical semicircles are arranged as shown.\n
+                      Find the diameter of one circle.</string>
+    <string name="Option1Ques1">36</string>
+    <string name="Option2Ques1">16</string>
+    <string name="Option3Ques1">22</string>
+    <string name="Option4Ques1">55</string>
+
+
+    <string name="q2">What is the missing value? </string>
+    <string name="Option1Ques2">36</string>
+    <string name="Option2Ques2">16</string>
+    <string name="Option3Ques2">22</string>
+    <string name="Option4Ques2">55</string>
+
+    <string name="next_text">next</string>
+    <string name="prev_text">previous</string>
+    <string name="level1">Level 1</string>
+    <string name="level2">Level 2</string>
+    <string name="level3">Level 3</string>
+    <string name="level4">Level 4</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 </resources>

@@ -29,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".explore"
-            android:exported="false"/>
-        <activity
             android:name=".AddTask"
             android:exported="false"
             android:noHistory="true"/>
+        <activity
+            android:name=".explore"
+            android:exported="false"/>
         <activity
             android:name=".Timer"
             android:exported="false"/>

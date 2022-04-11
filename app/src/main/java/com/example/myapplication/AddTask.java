@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myapplication.models.TaskListAdapter;
 import com.example.myapplication.models.Tasks;
@@ -42,8 +43,7 @@ public class AddTask extends AppCompatActivity {
         findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddTask.this, explore.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -58,6 +58,7 @@ public class AddTask extends AppCompatActivity {
                 EditText taskTimeView = findViewById(R.id.time_field);
                 EditText taskPriorityView = findViewById(R.id.priority_field);
                 EditText taskSubjectView = findViewById(R.id.subject_field);
+
 
                 String taskTitle = taskTitleView.getText().toString().trim();
                 String taskTime = taskTimeView.getText().toString().trim();
@@ -82,12 +83,12 @@ public class AddTask extends AppCompatActivity {
                 SharedPreferences.Editor editor2 = preferences.edit();
                 Gson gson1 = new Gson();
                 String json1 = gson1.toJson(tasksObj);
-                editor2.putString("Tasks", json);
+                editor2.putString("Tasks", json1);
                 editor2.commit();
 
 
 
-                // TODO: from current user id, update firestore database arrayUnion new task into task list. build a HashMap taskUpload obj first
+                // TODO: from current user id, update firestore database by using arrayUnion to add new task into task list. build a HashMap taskUpload obj first
                 HashMap<String, String> taskUpload = new HashMap<String, String>();
                 taskUpload.put("title", taskTitle);
                 taskUpload.put("description", "");

@@ -144,8 +144,10 @@ public class signupFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(), "User created", Toast.LENGTH_SHORT).show();
-                            userID = mAuth.getCurrentUser().getUid(); // get user ID in firebase
+                            userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid(); // get user ID in firebase
+                            Log.e("UserID", "fetched");
                             DocumentReference documentReference = mStore.collection("users").document(userID);
+
                             Map<String, Object> user = new HashMap<>();
                             user.put("Name", name);
                             user.put("Email", email);
@@ -153,20 +155,20 @@ public class signupFragment extends Fragment {
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Log.d(TAG, "onSuccess: user Profile is created for " + userID);
+                                    Log.e(TAG, "onSuccess: user Profile is created for " + userID);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: " + e);
+                                    Log.e(TAG, "onFailure: user profile failed to create " + e);
                                 }
                             });
-
+                            Log.e("Document Reference", "success");
                             // saves shared preferences in Shared_preferences_for_Jon.xml, private to editor
                             SharedPreferences preferences = getActivity().getSharedPreferences("Shared_preferences_for_Jon", Context.MODE_PRIVATE);
                             FirebaseUser getUser = mAuth.getCurrentUser();
+
                             if (getUser != null){
-                                //String name = getUser.getDisplayName();
                                 String email = getUser.getEmail();
                                 String uid = getUser.getUid();
 
@@ -180,7 +182,6 @@ public class signupFragment extends Fragment {
                                 // data > data > shared_pref > com.example.myapplication
                                 // or just use the search button on the top right for device file explorer
                                 editor.apply();
-
                                 // test to see if data is saved
                                 /*if (editor.commit())
                                     Toast.makeText(getActivity(), "Data is saved", Toast.LENGTH_LONG).show();*/
@@ -189,6 +190,8 @@ public class signupFragment extends Fragment {
 
                             startActivity(new Intent(getActivity(), explore.class));
                         }
+                        else
+                            Log.e("Failed", "to register");
 
                     }
                 });
