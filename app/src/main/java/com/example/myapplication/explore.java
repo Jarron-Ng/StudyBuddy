@@ -63,7 +63,6 @@ public class explore extends AppCompatActivity {
 
         // take UID from shared pref and name of user
         SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
         String uid = preferences.getString(UID, "");
         String name = preferences.getString(NAME, "");
 
@@ -191,6 +190,10 @@ public class explore extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
+                        SharedPreferences preferences = getSharedPreferences("Shared_preferences_for_Jon", MODE_PRIVATE);
+                        SharedPreferences.Editor editor2 = preferences.edit();
+                        editor2.putString("Tasks", "");
+                        editor2.commit();
                         finishAffinity(); // clears the back stack of page history
                         finish();
                     }
