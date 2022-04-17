@@ -1,4 +1,4 @@
-package com.example.project1d;
+package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,7 +41,15 @@ public class Level1 extends AppCompatActivity implements View.OnClickListener  {
         option4.setOnClickListener(this);
         nextButton.setOnClickListener(this);
         prevButton.setOnClickListener(this);
+
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
 
 
     //Check which button is clicked by the user

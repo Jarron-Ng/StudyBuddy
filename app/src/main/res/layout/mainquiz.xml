@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Using linear layout with vertical orientation and center gravity -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="top"
+    tools:context=".QuizMenu">
+
+    <ImageView
+        android:topLeftRadius="60dp"
+        android:topRightRadius="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="196dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/header" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/level1"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_bg"
+            android:fontFamily="@font/roboto"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5052D8"
+            android:text="@string/level1" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:gravity="bottom">
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:backgroundTint="#5052D8"
+            android:text="@string/back"/>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

@@ -58,7 +58,6 @@ public class explore extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
-        //Button mQuiz = findViewById(R.id.quiz);
 
 
         // take UID from shared pref and name of user
@@ -139,6 +138,14 @@ public class explore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(explore.this, AddTask.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.quiz).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(explore.this, QuizMenu.class);
                 startActivity(intent);
             }
         });

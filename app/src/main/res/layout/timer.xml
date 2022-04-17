@@ -175,7 +175,7 @@
         android:layout_alignBottom="@+id/timer_view"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="-116dp"
-        android:layout_marginBottom="-246dp"
+        android:layout_marginBottom="-253dp"
         android:layout_toRightOf="@+id/timer_view"
         android:fontFamily="@font/roboto"
         android:text="@string/start"

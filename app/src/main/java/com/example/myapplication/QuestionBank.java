@@ -1,4 +1,4 @@
-package com.example.project1d;
+package com.example.myapplication;
 
 public class QuestionBank {
 

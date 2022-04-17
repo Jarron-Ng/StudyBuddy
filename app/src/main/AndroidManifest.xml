@@ -38,6 +38,12 @@
         <activity
             android:name=".Timer"
             android:exported="false"/>
+        <activity
+            android:name=".QuizMenu"
+            android:exported="false"/>
+        <activity
+            android:name=".Level1"
+            android:exported="false"/>
 
         <meta-data
             android:name="preloaded_fonts"

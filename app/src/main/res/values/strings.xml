@@ -8,14 +8,14 @@
     <string name="name">Name</string>
     <string name="welcome_to_studybuddy">Welcome to \nStudyBuddy</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
     <!-- Quiz strings -->
     <string name="true_text">true</string>
     <string name="false_text">false</string>
     <string name="correct_answer">That\'s correct</string>
     <string name="wrong_answer">That\'s incorrect</string>
-    <string name="q1">Five identical semicircles are arranged as shown.\n
-                      Find the diameter of one circle.</string>
     <string name="Option1Ques1">36</string>
     <string name="Option2Ques1">16</string>
     <string name="Option3Ques1">22</string>
@@ -26,5 +26,9 @@
     <string name="level2">Level 2</string>
     <string name="level3">Level 3</string>
     <string name="level4">Level 4</string>
+    <string name="quiz">Quiz</string>
+    <string name="back">Back</string>
+    <string name="q1">Five identical semicircles are arranged as shown.\nFind the diameter of one circle.</string>
+    >
 
 </resources>
