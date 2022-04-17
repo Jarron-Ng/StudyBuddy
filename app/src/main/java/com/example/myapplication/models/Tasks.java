@@ -28,4 +28,6 @@ public class Tasks {
     public UserTask getTask(int position) { return this.userTasks.get(position); }
     public int getSize() { return this.userTasks.size(); }
 
+    public void remove(int adapterPosition) {
+    }
 }

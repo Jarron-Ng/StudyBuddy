@@ -71,6 +71,20 @@
                     app:layout_constraintVertical_bias="0.142"
                     app:srcCompat="@drawable/three_dots_more_button" />
 
+                <ImageButton
+                    android:id="@+id/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#F2F3F4"
+                    android:tint="#8F99EB"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.983"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.047"
+                    app:srcCompat="@android:drawable/ic_delete" />
+
                 <TextView
                     android:id="@+id/tag1"
                     android:layout_width="wrap_content"
