@@ -1,29 +1,27 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Level1 extends AppCompatActivity implements View.OnClickListener  {
+public class Level2 extends AppCompatActivity implements View.OnClickListener {
     private QuestionBank questionBank = new QuestionBank();
     private TextView questionTextView;
     private ImageView imageView;
     private Button option1, option2, option3, option4, nextButton, prevButton;
     private String correctAnswer;
-    private int currentQsIndex = 0;
+    private int currentQsIndex = 2;
     private int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.level1);
+        setContentView(R.layout.level2);
 
         questionTextView = (TextView)findViewById(R.id.qsTextView);
         imageView =(ImageView) findViewById(R.id.imageView);
@@ -49,7 +47,6 @@ public class Level1 extends AppCompatActivity implements View.OnClickListener  {
             }
         });
     }
-
 
 
     //Check which button is clicked by the user
@@ -90,7 +87,7 @@ public class Level1 extends AppCompatActivity implements View.OnClickListener  {
         } else {
             toastMessageId = R.string.wrong_answer;
         }
-        Toast.makeText(Level1.this,toastMessageId,Toast.LENGTH_SHORT).show();
+        Toast.makeText(Level2.this,toastMessageId,Toast.LENGTH_SHORT).show();
     }
 
     private void updateQuestion(int currentQsIndex) {
@@ -98,15 +95,16 @@ public class Level1 extends AppCompatActivity implements View.OnClickListener  {
         imageView.setImageResource(questionBank.getImage(currentQsIndex));
         option1.setText(questionBank.getOption1(currentQsIndex));
         option2.setText(questionBank.getOption2(currentQsIndex));
-        /*option3.setText(questionBank.getOption3(currentQsIndex));
-        option4.setText(questionBank.getOption4(currentQsIndex));*/
+        option3.setText(questionBank.getOption3(currentQsIndex));
+        option4.setText(questionBank.getOption4(currentQsIndex));
         correctAnswer = questionBank.getCorrectAnswer(currentQsIndex);
-        if (currentQsIndex == 0) {
+        if (currentQsIndex == 2) {
             prevButton.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.VISIBLE);
-        } else if (currentQsIndex == 1) {
+        } else if (currentQsIndex == questionBank.getLength() - 1) {
             nextButton.setVisibility(View.INVISIBLE);
             prevButton.setVisibility(View.VISIBLE);
         }
     }
+
 }

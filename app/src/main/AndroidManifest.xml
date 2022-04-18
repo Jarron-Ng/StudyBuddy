@@ -44,6 +44,9 @@
         <activity
             android:name=".Level1"
             android:exported="false"/>
+        <activity
+            android:name=".Level2"
+            android:exported="false"/>
 
         <meta-data
             android:name="preloaded_fonts"

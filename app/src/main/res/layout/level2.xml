@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".Level1">
+    tools:context=".Level2">
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:src="@drawable/f1"
+        android:src="@drawable/f3"
         android:layout_height="wrap_content"/>
 
     <!--TextView used for showing questions on screen-->
     <TextView
         android:id="@+id/qsTextView"
         android:fontFamily="@font/roboto"
-        android:text="@string/q1"
+        android:text= "@string/q3"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:padding="10dp"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="36"
+            android:text="1"
             android:textColor="@color/black"/>
 
         <!--Choice 2-->
@@ -53,7 +53,7 @@
             android:backgroundTint="@color/teal_200"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="46"
+            android:text="2"
             android:textColor="@color/black"/>
 
     </LinearLayout>
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="21"
+            android:text="0"
             android:textColor="@color/black"/>
 
         <!--Choice 4-->
@@ -83,7 +83,7 @@
             android:backgroundTint="@color/teal_200"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="5"
+            android:text="-1"
             android:textColor="@color/black"/>
 
     </LinearLayout>
@@ -103,7 +103,6 @@
             android:backgroundTint="#5052D8"
             android:text="@string/prev_text"
             android:visibility="invisible"/>
-
 
         <!--NextButton-->
         <Button
@@ -128,8 +127,6 @@
             android:layout_marginTop="48dp"
             android:backgroundTint="#5052D8"
             android:text="@string/back"/>
-
-
     </LinearLayout>
 
 </LinearLayout>
