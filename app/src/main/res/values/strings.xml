@@ -11,6 +11,11 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="start">Start</string>
     <string name="end">End</string>
+    <string name="date">Date (dd/mm/yyyy)</string>
+    <string name="time">Time</string>
+    <string name="new_to_do">New To-Do</string>
+    <string name="priority">Priority</string>
+    <string name="subject">Subject</string>
 
     <!-- Quiz strings -->
     <string name="true_text">true</string>
@@ -31,6 +36,7 @@
     <string name="back">Back</string>
     <string name="q1">Five identical semicircles are arranged as shown.\nFind the diameter of one circle.</string>
     <string name="q3">What is the derivative of f\'(x-1)?</string>
+
 
 
 </resources>

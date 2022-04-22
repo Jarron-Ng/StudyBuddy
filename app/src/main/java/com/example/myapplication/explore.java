@@ -134,6 +134,13 @@ public class explore extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(getIntent());
+            }
+        });
 
         //on click listener for add button
         findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {

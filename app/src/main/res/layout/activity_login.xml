@@ -25,33 +25,20 @@
             app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/forgetPw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/forgot_password"
-            android:textColor="#5052D8"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.177"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <EditText
             android:id="@+id/pw"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="52dp"
+            android:autofillHints=""
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="#7C7C7C"
-            app:layout_constraintBottom_toTopOf="@+id/forgetPw"
+            app:layout_constraintBottom_toTopOf="@+id/button3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            android:autofillHints="" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/edress"

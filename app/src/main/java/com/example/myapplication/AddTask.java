@@ -43,7 +43,8 @@ public class AddTask extends AppCompatActivity {
         findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(AddTask.this, explore.class);
+                startActivity(intent);
             }
         });
 
@@ -58,16 +59,18 @@ public class AddTask extends AppCompatActivity {
                 EditText taskTimeView = findViewById(R.id.time_field);
                 EditText taskPriorityView = findViewById(R.id.priority_field);
                 EditText taskSubjectView = findViewById(R.id.subject_field);
+                EditText dateView = (EditText) findViewById(R.id.date);
 
 
                 String taskTitle = taskTitleView.getText().toString().trim();
                 String taskTime = taskTimeView.getText().toString().trim();
                 String taskPriority = taskPriorityView.getText().toString().trim();
                 String taskSubject = taskSubjectView.getText().toString().trim();
+                String taskDate = dateView.getText().toString().trim();
 
                 LocalDateTime rightnow = LocalDateTime.now();
 
-                UserTask taskTemp = new UserTask(taskTitle,"","", taskTime, taskTime, taskSubject, taskPriority, "Not Done");
+                UserTask taskTemp = new UserTask(taskTitle,"","", taskDate, taskTime, taskSubject, taskPriority, "Not Done");
 
 
                 // TODO: from shared preferences get the login session id of current user
@@ -93,7 +96,7 @@ public class AddTask extends AppCompatActivity {
                 taskUpload.put("title", taskTitle);
                 taskUpload.put("description", "");
                 taskUpload.put("color","");
-                taskUpload.put("startDateTime",taskTime);
+                taskUpload.put("startDateTime",taskDate);
                 taskUpload.put("endDateTime",taskTime);
                 taskUpload.put("subject", taskSubject);
                 taskUpload.put("tag", taskPriority);
