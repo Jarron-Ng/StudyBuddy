@@ -43,8 +43,7 @@ public class AddTask extends AppCompatActivity {
         findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddTask.this, explore.class);
-                startActivity(intent);
+                finish();
             }
         });
 
