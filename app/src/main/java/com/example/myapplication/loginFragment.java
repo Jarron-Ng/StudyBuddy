@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,62 +70,52 @@ public class loginFragment extends Fragment{
                     mPassword.setError("Password must be more than 6 characters");
                 }
 
-                // get user data from firebase and store into shared preferences
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if(task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Logged in Successfully", Toast.LENGTH_SHORT).show();
 
-                            // saves shared preferences in Shared_preferences_for_Jon.xml, private to editor
-                            SharedPreferences preferences = getActivity().getSharedPreferences("Shared_preferences_for_Jon", Context.MODE_PRIVATE);
                             FirebaseUser getUser = mAuth.getCurrentUser();
-                            if (getUser != null){
-                                String email = getUser.getEmail();
-                                String uid = getUser.getUid();
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putString(UID, uid);
-                                editor.putString(EMAIL, email);
+                            String uid = getUser.getUid();
+                            DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(uid);
+                            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
 
-                            }
+                                        DocumentSnapshot document = task.getResult();
+                                        String name = (String) document.getData().get("Name");
+
+                                        // put details into the editor, saved as key-value pairs
+                                        SharedPreferences preferences = getActivity().getSharedPreferences("Shared_preferences_for_Jon", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putString(UID, uid);
+                                        editor.putString(NAME, name);
+                                        editor.putString(EMAIL, email);
+                                        editor.putString("Tasks", "");
+
+                                        // Find the folder on View > Tool Windows > Device File Explorer
+                                        // data > data > shared_pref > com.example.myapplication
+                                        // or just use the search button on the top right for device file explorer
+                                        editor.commit();
+                                        Log.i("firebase", "successful save user details to sharedpref");
+                                        startActivity(new Intent(getActivity(), explore.class));
+                                    } else {
+                                        Log.i("firebase", "query firestore for uid failed to complete");
+                                    }
+                                }
+                            });
                         }
-                        else
+                        else{
                             Toast.makeText(getActivity(), "Invalid Credentials! "
                                     + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                //query firestore for username
-                FirebaseUser getUser = mAuth.getCurrentUser();
-                String uid = getUser.getUid();
-                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(uid);
-                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            String name = (String) document.getData().get("Name");
-
-                            // put details into the editor, saved as key-value pairs
-                            SharedPreferences preferences = getActivity().getSharedPreferences("Shared_preferences_for_Jon", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString(UID, uid);
-                            editor.putString(NAME, name);
-                            editor.putString(EMAIL, email);
-                            editor.putString("Tasks", "");
-
-                            // Find the folder on View > Tool Windows > Device File Explorer
-                            // data > data > shared_pref > com.example.myapplication
-                            // or just use the search button on the top right for device file explorer
-                            editor.commit();
-                            Log.i("firebase", "successful save user details to sharedpref");
-                            startActivity(new Intent(getActivity(), explore.class)); // NOTE: big J i changed this frm main activity to explore which is my landing page class
-                        }
-                        else {
-                            Log.i("firebase", "query firestore for uid failed to complete");
                         }
                     }
                 });
+
+                //query firestore for user data and store into shared preferences
+
 
                 // test to see if data is saved
                                 /*if (editor.commit())
