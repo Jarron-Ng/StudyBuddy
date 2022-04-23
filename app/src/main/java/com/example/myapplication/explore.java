@@ -230,6 +230,7 @@ public class explore extends AppCompatActivity {
         String json = preferences.getString("Tasks", "");
         Tasks tasksObj = gson.fromJson(json, Tasks.class);
 
+
         // TODO: take the tasks object and pass it to TaskList adapter for recyclerview to display data
 
         // Add the following lines to create RecyclerView

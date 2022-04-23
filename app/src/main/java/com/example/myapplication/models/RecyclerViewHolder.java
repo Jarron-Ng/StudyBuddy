@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
@@ -37,6 +41,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     private TextView view_line;
     private TextView view_date;
     private ImageButton menuIcon;
+    private Switch switchbutton;
     public static final String UID = "UID";
     FirebaseFirestore mStore;
 
