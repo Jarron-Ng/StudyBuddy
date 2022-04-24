@@ -8,7 +8,8 @@ As with all androidstudio projects, java scripts are located in app/src/main/jav
 We have a models folder that contains all our model objects used for recycler view and to create our own Task object.
 
 
-#### Files and their usage in /myapplication
+### Files and their usage in /myapplication
+- /models: Utility files to support recycler view and to specify our own Tasks Class/Object
 - *AddTask.java*: Adds a task object to firestore and to explore.java
 - *Login.java*: An adapter that holds our fragment activity for the login/signup page
 - *loginFragment.java*: Handles user logins and firebase authentication
@@ -16,7 +17,7 @@ We have a models folder that contains all our model objects used for recycler vi
 - *startup.java*: Start up page when app is first pressed
 
 
-##### Contributed by:
+#### Contributed by:
 
 Jon-Taylor Lim (1005053)
 Ng Jing Heng Jarron (1005548)
