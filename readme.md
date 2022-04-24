@@ -15,8 +15,8 @@ We have a models folder that contains all our model objects used for recycler vi
 - *Level1, Level2.java*: Loads and display quizzes according to difficulty
 - *Login.java*: An adapter that holds our fragment activity for the login/signup page
 - *loginFragment.java*: Handles user logins and firebase authentication
-- *QuizMenu*: Displays quiz menu
-- *QuestionBank*: Utility class used to store and load questions for quiz
+- *QuizMenu.java*: Displays quiz menu
+- *QuestionBank.java*: Utility class used to store and load questions for quiz
 - *signupFragment.java*: Handles user signups and firebase storage
 - *startup.java*: Start up page when app is first pressed
 - *Timer.java*: Pomodoro timer for user to use it as a stopwatch to keep track of studying time
