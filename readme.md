@@ -36,5 +36,5 @@ Nguyen Thai Huy (1005374)
 
 ***SUTD 50.001***
 
-***Note***
+***Note:***
 We have redacted our firebase secret key
