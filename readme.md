@@ -35,3 +35,6 @@ Ang Yu Jie (1005270)
 Nguyen Thai Huy (1005374)
 
 ***SUTD 50.001***
+
+***Note***
+We have redacted our firebase secret key
