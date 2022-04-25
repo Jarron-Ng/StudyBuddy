@@ -24,6 +24,8 @@ We have a models folder that contains all our model objects used for recycler vi
 
 #### Contributed by:
 
+Team 3C:
+
 Jon-Taylor Lim (1005053)
 Ng Jing Heng Jarron (1005548)
 Ng Jowie (1005494)
